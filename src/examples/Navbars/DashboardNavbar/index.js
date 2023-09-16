@@ -148,15 +148,9 @@ function DashboardNavbar({ absolute, light, isMini }) {
           mb={{ xs: 1, md: 0 }}
           sx={(theme) => navbarRow(theme, { isMini })}
         >
-          <Breadcrumbs
-            icon="home"
-            title={route[route.length - 1]}
-            route={route}
-            light={transparentNavbar ? light : false}
-          />
-          <Icon fontSize="medium" sx={navbarDesktopMenu} onClick={handleMiniSidenav}>
-            {miniSidenav ? "menu_open" : "menu"}
-          </Icon>
+        <Icon fontSize="medium" sx={navbarDesktopMenu} onClick={handleMiniSidenav}>
+          {miniSidenav ? "menu_open" : "menu"}
+        </Icon>
         </ArgonBox>
         {isMini ? null : (
           <ArgonBox sx={(theme) => navbarRow(theme, { isMini })}>

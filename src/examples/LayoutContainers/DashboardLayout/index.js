@@ -44,7 +44,7 @@ function DashboardLayout({ bgColor, children, ...rest }) {
         p: 3,
 
         [breakpoints.up("xl")]: {
-          transition: transitions.create(["margin-left", "margin-right"], {
+            transition: transitions.create(["margin-left", "margin-right"], {
             easing: transitions.easing.easeInOut,
             duration: transitions.duration.standard,
           }),

@@ -15,7 +15,7 @@ import Card from "@mui/material/Card";
 // Argon Dashboard 2 MUI components
 import ArgonBox from "components/ArgonBox";
 import ArgonTypography from "components/ArgonTypography";
-
+ 
 // Images
 import bg1 from "assets/images/img-2.jpg";
 import bg2 from "assets/images/img-1.jpg";
