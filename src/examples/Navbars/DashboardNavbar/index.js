@@ -27,6 +27,8 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import Icon from "@mui/material/Icon";
+import Tab  from "@mui/material/Tab";
+import Tabs  from "@mui/material/Tabs";
 
 // Argon Dashboard 2 MUI components
 import ArgonBox from "components/ArgonBox";
@@ -148,10 +150,20 @@ function DashboardNavbar({ absolute, light, isMini }) {
           mb={{ xs: 1, md: 0 }}
           sx={(theme) => navbarRow(theme, { isMini })}
         >
-        <Icon fontSize="medium" sx={navbarDesktopMenu} onClick={handleMiniSidenav}>
+        <ArgonTypography variant="h2">
+          PataBeba
+        </ArgonTypography>
+{/*         <Tabs
+                // indicatorColor="secondary"
+                // textColor="inherit"
+        >
+        <Tab label="Loads" />
+        </Tabs> */}
+   {/*      <Icon fontSize="medium" sx={navbarDesktopMenu} onClick={handleMiniSidenav}>
           {miniSidenav ? "menu_open" : "menu"}
-        </Icon>
+        </Icon> */}
         </ArgonBox>
+
         {isMini ? null : (
           <ArgonBox sx={(theme) => navbarRow(theme, { isMini })}>
             <ArgonBox pr={1}>

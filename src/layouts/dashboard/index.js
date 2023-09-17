@@ -17,6 +17,10 @@ Coded by www.creative-tim.com
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import Inventory2Icon from '@mui/icons-material/Inventory2';
+import GroupsIcon from '@mui/icons-material/Groups';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 // Argon Dashboard 2 MUI components
 import ArgonBox from "components/ArgonBox";
@@ -29,7 +33,8 @@ import Footer from "examples/Footer";
 import DetailedStatisticsCard from "examples/Cards/StatisticsCards/DetailedStatisticsCard";
 import SalesTable from "examples/Tables/SalesTable";
 import CategoriesList from "examples/Lists/CategoriesList";
-import GradientLineChart from "examples/Charts/LineCharts/GradientLineChart";
+// import GradientLineChart from "examples/Charts/LineCharts/GradientLineChart";
+import GradientLineChart from "examples/LandingPage";
 
 // Argon Dashboard 2 MUI base styles
 import typography from "assets/theme/base/typography";
@@ -41,9 +46,28 @@ import Slider from "layouts/dashboard/components/Slider";
 import gradientLineChartData from "layouts/dashboard/data/gradientLineChartData";
 import salesTableData from "layouts/dashboard/data/salesTableData";
 import categoriesListData from "layouts/dashboard/data/categoriesListData";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function Default() {
   const { size } = typography;
+  const[data, setData] = useState({data:{}, isFetching:false});
+
+  const fetchStats = async () => {
+    try {
+        setData((data) => ({data: data.data, isFetching: true}));
+        const response = await axios.get(process.env.REACT_APP_ENDPOINT_STATS);
+        setData({data: response.data, isFetching: false});
+    } catch (e) {
+        console.log(e);
+        setData((data) => ({data: data.data, isFetching: false }));
+    } 
+  };
+
+  useEffect(() => {
+    setTimeout(fetchStats, 0);
+  }, []);
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -51,39 +75,40 @@ function Default() {
         <Grid container spacing={3} mb={3}>
           <Grid item xs={12} md={6} lg={3}>
             <DetailedStatisticsCard
-              title="today's money"
-              count="$53,000"
-              icon={{ color: "info", component: <i className="ni ni-money-coins" /> }}
-              percentage={{ color: "success", count: "+55%", text: "since yesterday" }}
+              title="Number of Loads"
+              count={data.data.loads}
+              // icon={{ color: "info", component: <i className="ni ni-money-coins" /> }}
+              icon={{ color: "info", component: <Inventory2Icon/> }}
+              percentage={{ color: "success", count: `+${data.data.load_added_today}`, text: "today" }}
             />
           </Grid>
           <Grid item xs={12} md={6} lg={3}>
             <DetailedStatisticsCard
-              title="today's users"
-              count="2,300"
-              icon={{ color: "error", component: <i className="ni ni-world" /> }}
-              percentage={{ color: "success", count: "+3%", text: "since last week" }}
+              title="Number of Trucks"
+              count={data.data.trucks}
+              icon={{ color: "info", component: <LocalShippingIcon/> }}
+              percentage={{ color: "success", count: `+${data.data.trucks_added_today}`, text: "today" }}
             />
           </Grid>
           <Grid item xs={12} md={6} lg={3}>
             <DetailedStatisticsCard
-              title="new clients"
-              count="+3,462"
-              icon={{ color: "success", component: <i className="ni ni-paper-diploma" /> }}
-              percentage={{ color: "error", count: "-2%", text: "since last quarter" }}
+              title="Participants"
+              count={data.data.participants}
+              icon={{ color: "info", component: <GroupsIcon/> }} 
+              percentage={{ color: "success", count: `+${data.data.participants_today}`, text: "today" }}
             />
           </Grid>
           <Grid item xs={12} md={6} lg={3}>
             <DetailedStatisticsCard
-              title="sales"
-              count="$103,430"
-              icon={{ color: "warning", component: <i className="ni ni-cart" /> }}
-              percentage={{ color: "success", count: "+5%", text: "than last month" }}
+              title="Completed Orders"
+              count="430"
+              icon={{ color: "info", component: <CheckCircleIcon/> }}  
+              percentage={{ color: "success", count: "+5", text: "today" }}
             />
           </Grid>
         </Grid>
         <Grid container spacing={3} mb={3}>
-          <Grid item xs={12} lg={7}>
+          <Grid item xs={12} lg={8}>         
             <GradientLineChart
               title="Sales Overview"
               description={
@@ -101,8 +126,9 @@ function Default() {
               }
               chart={gradientLineChartData}
             />
+
           </Grid>
-          <Grid item xs={12} lg={5}>
+          <Grid item xs={12} lg={4}>
             <Slider />
           </Grid>
         </Grid>
